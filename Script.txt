@@ -1,0 +1,25 @@
+var ss = SpreadsheetApp.openById('');
+var sheet = ss.getSheetByName('ESP32');
+sheet.getLastRow() = 1;
+
+function doGet(e){
+  //----------------------------------------------------------------------------------
+  //write_google_sheet() function in esp32 sketch, is send data to this code block
+  //----------------------------------------------------------------------------------
+  //get gps data from ESP32
+  if (e.parameter == 'undefined') {
+    return ContentService.createTextOutput("Received data is undefined");
+  }
+  //----------------------------------------------------------------------------------
+  var dateTime = new Date();
+  Year    = e.parameters.Year;
+
+  var nextRow = sheet.getLastRow() + 1;
+  sheet.getRange("A" + nextRow).setValue(dateTime);
+  sheet.getRange("B" + nextRow).setValue(Year);
+
+
+  //returns response back to ESP32
+  return ContentService.createTextOutput("Status Updated in Google Sheet");
+  //----------------------------------------------------------------------------------
+}
